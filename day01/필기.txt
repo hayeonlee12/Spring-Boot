@@ -1,0 +1,71 @@
+
+1. Framework란?
+- '뼈대나 근간'을 이루는 코드들의 묶음
+- 프로그램의 기본 흐름이나 구조를 정하고, 이 구조에 자신의 코드를
+추가하는 방식으로 개발할 수 있도록 하는 프로그래밍의 기본 틀을
+의미
+- 개발에 필요한 구조가 제공되고, 여기에 필요한 부분을 조립하는 
+형태로 개발이 진행된다.
+
+2. 라이브러리
+- 자주 사용되는 로직을 재사용하기 편리하도록 잘 정리한 일련의
+코드들의 집합
+
+3. Framework vs. 라이브러리
+- 프레임워크는 자동차의 프레임, 즉 기본적으로 구성하고 있는 뼈대를 
+말한다.
+- 라이브러리는 자동차의 기능을 하는 부품을 의미한다. 
+- 한 번 정해진 자동차의 프레임은 바꿀 수 없다.
+- 소형차를 만들기 위해 뼈대를 사용하는데, 이 뼈대로 SUV를 만들 수 
+없다. (Framework)
+- 그러나 바퀴나 선루프, 헤드라이트 등은 비교적 다른 종류로 쉽게
+바뀔 수 있다. (라이브러리)
+
+4. Spring 이란?
+- 스프링 프레임워크는 자바 플랫폼을 위한 오픈소스 애플리케이션
+프레임워크라서 간단히 스프링이라고도 불린다.
+- 동적인 웹 사이트를 개발하기 위한, 여러 가지 서비스를 제공하고
+있다.
+
+5. 스프링 프로젝트 생성
+- https://start.spring.io/
+
+5-1. Project
+- 빌드 툴 : 프로젝트에 필요한 의존성을 관리하는 툴
+과거에는 Maven을, 최근에는 Gradle 추세이다.
+- Maven 
+- Gradle
+
+6. 스프링 시작점
+- @SpringBootApplicaiton : 스프링 부트의 자동 설정 읽기와 생성이
+모두 자동으로 설정된다. 
+
+7. Spring MVC
+- @Controller : 해당 url mapping을 찾는 
+- @GetMapping : url get 방식 요청 매핑
+- 컨트롤러에서 리턴 값으로 문자를 반환하면 
+resources/templates/ + {viewName} + .html
+	-> 뷰리졸버(viewResolver)
+
+8. DispatcherServlet
+- 스프링 MVC도 프론트 컨트롤러 패턴으로 구현되어 있다.
+- 스프링 MVC의 프론트 컨트롤러가 바로 디스패처 서블릿이다. 
+- DispatcherServlet - > FrameworkServlet
+	-> HttpServletBean - > HttpServlet
+
+9. ViewResolver
+- 실행할 뷰를 찾는 일을 한다.
+- 페이지 컨트롤러가 리턴한 뷰 이름에 해당하는 뷰 객체를 매핑하는
+역할
+
+10. Model 
+- Controller 에서의 데이터를 Model에 담는다.
+View는 Model에 담겨있는 데이터만 쏙쏙 골라서 화면에 바인딩해준다.
+- HashMap의 형태를 갖고있고, key와 value 값을 저장한다.
+- servlet에서 request.setAttribute()와 비슷한 역할을 한다. 
+
+11. ModelAndView
+- model에서 View의 영역이 좀 더 확장
+- Model과 View를 동시에 설정이 가능하려면 Controller는
+ModelandView 객체만 리턴하지만 Model과 View가 모두 리턴 가능
+- addObject(key, value);

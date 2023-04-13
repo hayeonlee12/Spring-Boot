@@ -1,0 +1,9 @@
+#port 수정
+server.port=9090
+
+#한글
+spring.http.encoding.charset=UTF-8
+spring.http.encoding.enabled=true
+spring.http.encoding.force=true
+
+spring.thymeleaf.cache=false;
