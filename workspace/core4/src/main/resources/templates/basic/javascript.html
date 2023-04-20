@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<!-- 
+		자바스크립트 영역에 자바스크립트 인라인을 사용하면
+		thymeleaf가 관여해서 도와준다.
+	 -->
+	 <script th:inline = "javascript">
+	 	let username = [[${user.username}]];
+	 	let age = [[${user.age}]];
+	 	
+	 	// 자바스크립트 내추럴 템플릿
+	 	let username2 = /*[[${user.username}]]*/ "test username";
+	 	
+	 	// 객체
+	 	let user = [[${user}]]
+	 </script>
+	 
+	 <!-- 자바스크립트 인라인 each -->
+	 <script th:inline = "javascript">
+	 	[# th:each="user, stat : ${users}"]
+	 		let user[[${stat.count}]] = [[${user}]]
+	 	[/]
+	 </script>
+</body>
+</html>
