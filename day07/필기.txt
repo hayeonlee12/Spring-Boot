@@ -1,0 +1,17 @@
+
+1. 리다이렉트
+- 스프링은 redirect:/ 으로 편리하게 리다이렉트를 지원한다.
+- redirect:/basic/items/{itemId}
+: 컨트롤러에 매핑된 @PathVariable 의 값은 redirect 에도 사용할 수 
+있다.
+@PathVariable Long itemId의 값을 그대로 사용한다.
+
+2. RedirectAttributes
+- RedirectAttributes 를 사용하면 pathVariable 쿼리 파라미터까지도
+처리를 해준다.
+- redirect:/basic/items/{itemId}
+redirectAttributes.addAttribute("item", saveItem.getId());
+redirectAttributes.addAttribute("status", true);
+
+pathVariable 바인딩 : {itemId}
+나머지는 쿼리 파라미터로 처리 : ?status=true

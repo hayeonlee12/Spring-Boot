@@ -22,9 +22,10 @@
 	 
 	 <!-- 자바스크립트 인라인 each -->
 	 <script th:inline = "javascript">
+	 /*<![CDATA[*/
 	 	[# th:each="user, stat : ${users}"]
 	 		let user[[${stat.count}]] = [[${user}]]
-	 	[/]
+	 	/*]]>*/
 	 </script>
 </body>
 </html>
