@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.codingbox.web.filter.LogFilter;
+import com.codingbox.web.filter.LoginCheckFilter;
 
 @Configuration
 public class WebConfig {
@@ -28,7 +29,7 @@ public class WebConfig {
 		FilterRegistrationBean<Filter> filterRegistrationBean
 			= new FilterRegistrationBean<>();
 		
-		filterRegistrationBean.setFilter(new LogFilter());
+		filterRegistrationBean.setFilter(new LoginCheckFilter());
 		filterRegistrationBean.setOrder(2);
 		filterRegistrationBean.addUrlPatterns("/*");
 		

@@ -68,25 +68,25 @@ public class LoginController {
 		
 		// 성공시
 		HttpSession session = request.getSession();
-		session.setAttribute(SessionConst.LOGIN_MEMBER, session);
+		session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
 		redirAttrs.addFlashAttribute("msg", "로그인 성공");
 		return "redirect:/";
 		
 	}
 	
 //	@PostMapping("/logout")
-	public String logout(HttpServletRequest request) {
+	public String logout(HttpServletResponse response) {
+		expireCookie(response, "memberId");
+		return "redirect:/";
+	}
+	
+	@PostMapping("/logout")
+	public String logoutv2(HttpServletRequest request) {
 		// 세션을 삭제한다.
 		HttpSession session = request.getSession(false);
 		if(session != null) {
 			session.invalidate();
 		}
-		return "redirect:/";
-	}
-	
-	@PostMapping("/logout")
-	public String logoutv2(HttpServletResponse response) {
-		expireCookie(response, "memberId");
 		return "redirect:/";
 	}
 	

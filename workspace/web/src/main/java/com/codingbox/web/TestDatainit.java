@@ -20,6 +20,11 @@ public class TestDatainit {
 	
 	@PostConstruct
 	public void init() {
+		
+		itemRepository.save(new Item("testA", 10000, 10));
+		itemRepository.save(new Item("testB", 20000, 20));
+		itemRepository.save(new Item("testC", 30000, 30));
+		
 		Member member = new Member();
 		member.setLoginId("test");
 		member.setPassword("test!");
@@ -27,14 +32,4 @@ public class TestDatainit {
 		memberRepository.save(member);
 	}
 	
-	/*
-	 * 테스트용 데이터 추가
-	 */
-	@PostConstruct
-	public void init2() {
-		System.out.println("초기화 메서드");
-		itemRepository.save(new Item("testA", 10000, 10));
-		itemRepository.save(new Item("testB", 20000, 20));
-		itemRepository.save(new Item("testC", 30000, 30));
-	}
 }

@@ -31,7 +31,8 @@ public class HomeController {
 	 * required = false : 로그인 안한 사용자도 들어와야 한다.
 	 */
 //	@GetMapping("/")
-	public String loginhome(@CookieValue(name="MemberId", required=false) Long memberId,
+	public String loginhome(
+			@CookieValue(name="memberId", required=false) Long memberId,
 							Model model) {
 		
 		// 로그인한 사용자가 아니라면 home으로 보낸다.

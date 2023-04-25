@@ -64,67 +64,13 @@ public class ItemController {
 	 * @RequestParam 
 	 * : html의 name으로 들어온다.
 	 */
-//	@PostMapping("/add")
-	public String save(
-				@RequestParam String 	itemName,
-				@RequestParam int		price,
-				@RequestParam Integer	quantity,
-				Model model
-			) {
-		Item item = new Item();
-		item.setItemName(itemName);
-		item.setPrice(price);
-		item.setQuantity(quantity);
-		
-		itemRepository.save(item);
-		model.addAttribute("item", item);
-		return "items/item";
-	}
-	
-//	@PostMapping("/add")
-	public String save2(@ModelAttribute("item")Item item, 
-			Model model) {
-		itemRepository.save(item);
-//		model.addAttribute("item", item);
-//		model.addAttribute(item);
-		return "items/item";
-	}
-	
-	/*
-	 * @ModelAttribute
-	 * - name 생략 가능
-	 * - model.addAttribute(item); 자동 추가, 생략 가능
-	 *   생략시 model에 저장되는 name은 클래스명 첫 글자만
-	 *   소문자로 등록 경우만 생략가능, Item -> item
-	 */
-//	@PostMapping("/add")
-	public String save3(@ModelAttribute Item item) {
-		itemRepository.save(item);
-		return "items/item";
-	}
-	
-	/*
-	 * @ModelAttribute 자체 생략 가능
-	 * : 대상 객체는 모델에 자동 등록 된다.
-	 */
-//	@PostMapping("/add")
-	public String save4(Item item) {
-		itemRepository.save(item);
-		return "items/item";
-	}
-	
-//	@PostMapping("/add")
-	public String save5(Item item) {
-		itemRepository.save(item);
-		return "redirect:/items/items/" + item.getId();
-	}
 	
 	@PostMapping("/add")
 	public String save6(Item item, RedirectAttributes redirectAttributes) {
 		Item saveItem = itemRepository.save(item);
 		redirectAttributes.addAttribute("item", saveItem.getId());
 		redirectAttributes.addAttribute("status", true);
-		return "redirect:/items/items/{itemId}" ;
+		return "redirect:/items/{itemId}" ;
 	}
 	
 	@GetMapping("/{itemId}/edit")
@@ -146,7 +92,7 @@ public class ItemController {
 	@PostMapping("/{itemId}/edit")
 	public String edit(@PathVariable Long itemId, @ModelAttribute Item item) {
 		itemRepository.update(itemId, item);
-		return "redirect:/items/items/{itemId}";
+		return "redirect:/items/{itemId}";
 	}
 	
 	
