@@ -9,10 +9,10 @@ import org.springframework.context.annotation.Configuration;
 import com.codingbox.web.filter.LogFilter;
 import com.codingbox.web.filter.LoginCheckFilter;
 
-@Configuration
+//@Configuration
 public class WebConfig {
 	
-	@Bean
+//	@Bean
 	public FilterRegistrationBean logFilter() {
 		FilterRegistrationBean<Filter> filterRegistrationBean
 			= new FilterRegistrationBean<>();
@@ -24,7 +24,7 @@ public class WebConfig {
 		return filterRegistrationBean;
 	}
 	
-	@Bean
+//	@Bean
 	public FilterRegistrationBean loginCheckFilter() {
 		FilterRegistrationBean<Filter> filterRegistrationBean
 			= new FilterRegistrationBean<>();

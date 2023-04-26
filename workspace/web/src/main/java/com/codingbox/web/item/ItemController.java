@@ -55,7 +55,7 @@ public class ItemController {
 		return "items/item";
 	}
 	
-	@GetMapping("/add")
+	@GetMapping("/items/add")
 	public String addForm() {
 		return "items/addForm";
 	}

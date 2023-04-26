@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.codingbox.web.domain.member.Member;
@@ -51,7 +52,7 @@ public class LoginController {
 		
 	}
 	
-	@PostMapping("/login")
+//	@PostMapping("/login")
 	public String loginv2(@ModelAttribute LoginForm form, Model model, RedirectAttributes redirAttrs,
 						HttpServletRequest request) {
 		/*
@@ -71,6 +72,29 @@ public class LoginController {
 		session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
 		redirAttrs.addFlashAttribute("msg", "로그인 성공");
 		return "redirect:/";
+		
+	}
+	
+	@PostMapping("/login")
+	public String loginv3(@ModelAttribute LoginForm form, Model model, RedirectAttributes redirAttrs,
+						HttpServletRequest request, @RequestParam(defaultValue = "/") String redirectURL) {
+		/*
+		 * model : forward 방식
+		 * RedirectAttributes : redirect 방식
+		 */
+		
+		Member loginMember = loginService.login(form.getLoginId(), form.getPassword());
+		if(loginMember == null) {
+			// 로그인 실패
+			model.addAttribute("msg", "로그인 실패");
+			return "login/loginForm";
+		}
+		
+		// 성공시
+		HttpSession session = request.getSession();
+		session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
+		redirAttrs.addFlashAttribute("msg", "로그인 성공");
+		return "redirect:" + redirectURL;
 		
 	}
 	
