@@ -13,11 +13,9 @@
          <property name="javax.persistence.jdbc.password" value="spring" />
          <property name="javax.persistence.jdbc.url"
             value="jdbc:oracle:thin:@//localhost:1521/XE" />
-         <property name="hibernate.dialect"
-            value="org.hibernate.dialect.Oracle10gDialect" />
-         <!-- <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL10Dialect" 
-            /> -->
-         <property name="hibernate.hbm2ddl.auto" value="none" />
+          <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />
+<!--         <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL10Dialect"  />  -->
+         <property name="hibernate.hbm2ddl.auto" value="create" />
 
 
          <!-- 옵션 -->
