@@ -11,7 +11,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
+//@Entity
 @Getter @Setter
 public class Member {
 	// pk, 자동증가

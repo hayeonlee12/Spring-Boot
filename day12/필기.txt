@@ -1,0 +1,125 @@
+
+1. 설정파일 *.yml
+
+1-1. properties와 비교했을 때 yml의 장점
+- 한 눈에 보기에 가독성이 좋다.
+- 불필요한 코드의 반복을 피할 수 있다.
+- 계층 구조로 이해하기 쉽고 쓰기 편하다.
+
+1-2. 주의사항
+- 띄어쓰기 (스페이스) 2칸을 기준으로 계층 만든다. 따라서 띄어쓰기
+2칸을 필수로 적어주어야 한다.
+
+2. 임베디드 타입
+- 새로운 값 타입을 직접 정의할 수 있다.
+- JPA는 임베디드 타입(embedded type)이라 함
+- 주로 기본 값 타입을 모아서 만들어서 복합 값 타입이라고도 함
+- int, String과 같은 타입
+
+2-1. JPA에서 임베디드 타입 사용법
+- @Embeddable : 값 타입을 정의하는 곳에 표시
+- @Embedded   : 값 타입을 사용하는 곳에 표시
+- 기본 생성자가 필수
+
+2-2. 임베디드 타입의 장점
+- 재사용
+- 높은 응집도
+- Period.isWork()처럼 해당 값 타입만 사용하는 의미 있는 메소드를
+만들 수 있음(객체지향적인 설계가 가능하다)
+- 임베디드 타입을 포함한 모든 값 타입은, 값 타입을 소유한 엔티티에 
+생명주기를 의존한(너무 당연한 이야기)
+
+2-4. 임베디드 타입과 테이블 매핑
+- 임베디드 타입은 엔티티의 값일 뿐이다.
+- 임베디드 타입을 사용하기 전과 후에 매핑하는 테이블은 같다.
+- 객체와 테이블을 아주 세밀하게 매핑하는 것이 가능
+- 잘 설계한 ORM 애플리케이션은 매핑한 테이블의 수보다 클래스의
+수가 더 많음.
+
+2-5. @AttributeOverride : 속성 재정의
+- 한 엔티티에서 같은 값 타입을 사용하면 컬럼 명이 중복됨
+- @AttributeOverrides, @AttributeOverride를 이용해서 속성 재정의
+
+2-6. 객체 타입의 한계
+- 항상 값을 복사해서 사용하면 공유 참조로 인해 발생하는 부작용을
+피할 수 있다.
+- 문제는 임베디드 타입처럼 직접 정의한 값 타입은 자바의 기본 타입이
+아니라 객체 타입이다.
+- 자바 기본 타입에 값을 대입하면 값을 복사한다.
+- 객체 타입은 참조 값을 직접 대입하는 것을 막을 방법이 없다.
+- 객체의 공유 참조는 피할 수 없다.
+ -> 새로운 객체를 무조건 만들어서 할당
+ -> setter를 없앤다.
+
+3. JPQL 소개
+
+3-1. JPQL 소개(Java Persistence Query Language)
+- 가장 단순한 조회 방법
+- JPA를 사용하면 엔티티 객체를 중심으로 개발
+ -> 문제는 검색 쿼리.
+- JPA는 SQL을 추상화한 JPQL이라는 객체 지향 쿼리 언어 제공
+- SQL과 문법 유사, select, from, where, group by, having, join 지원
+- JPQL : 엔티티 객체를 대상으로 쿼리
+- SQL  : 데이터베이스 테이블을 대상으로 쿼리
+- SQL을 추상화해서 특정 데이터베이스 SQL에 의존하지 않음
+- JPA는 JPQL을 분석한 후 적절한 SQL을 만들어서 데이터베이스를 조회
+
+3-2. 사용법
+- 대소문자 구분
+ -> 엔티티와 속성은 대소문자 구분
+ -> JPQL 키워드는 구분하지 않음
+
+- 엔티티 이름
+ -> 테이블명 대신 엔티티명을 사용, @Entity(name="")으로 설정 가능
+ -> 지정하지 않을 시 클래스 명을 기본값으로 사용(기본값을 추천)
+
+- 별칭은 필수
+ -> JPQL은 별칭은 필수
+ -> AS는 생략 가능
+
+3-3. JPQL 문법
+- select 문
+  select 절
+  from 절
+  where 절
+  group by 절
+  having 절
+  orderby 절
+
+- update 문
+  update 절 where 절
+
+- delete 문
+  delete 절 where 절
+
+- select m from Member as m where m.age > 18
+ -> 엔티티 속성 : Member, age는 대소문자를 구분해준다
+	(자바 클래스는 대소문자 구분 하니까)
+ -> JPQL 키워드는 대소문자 구분하지 X : select, from, where
+ 
+3-4. 집합과 정렬
+ select count(m), 	// 회원수
+	sum(m.age), 	// 나이 합
+	avg(m.age),	// 평균 나이
+	max(m.age),	// 최대 나이
+	min(m.age)	// 최소 나이
+ from Member m
+
+3-5. 반환 타입 지정
+- TypeQuery : 반환 타입이 명확할 때 사용
+- Query	     : 반환 타입이 명확하지 않을 때 사용
+
+ TypeQuery<Member> query = 
+    em.createQuery("select m from Member m", Member.class);
+ Query Query = 
+    em.createQuery("select m.username, m.age from Member m);
+
+3-6. 결과 조회
+ - query.getResultList( ) : 결과가 하나 이상일 때, 리스트 반환
+ - > 결과 없으면 빈 리스트 반환
+ - > 빈 collection이 반환되기 때문에 NullPointerException에 대한
+  걱정은 하지 않아도 된다.
+ - query.getSingleResult( ) : 결과가 정확히 하나(조심!) 일 때 단일
+			객체를 반환
+ -> 결과가 없으면 : javax.persistence.NoResultException
+ -> 결과가 둘 이상이면 : javax.persistence.NonUniqueResultException
