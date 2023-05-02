@@ -1,0 +1,69 @@
+
+1. 파라미터 바인딩 - 이름 기준, 위치 기준
+
+1-1. 이름 기준
+	select m from Member m where m.username = :username
+	
+	query.setParameter("username", usernameParam);
+
+1-2. 위치기준
+	select m from Member m where m.username = ?1
+
+	query.setParameter(1, usernameParam);
+
+2. 프로젝션
+- select 절에 조회할 대상을 지정하는 것
+- 프로젝션 대상 : 엔티티, 임베디드 타입, 스칼라 타입(숫자, 문자등 기본
+타입)
+
+- select m from Member m
+ => 엔티티 프로젝션(Member 엔티티 조회)
+- select m.team from Member m
+ => 엔티티 프로젝션(Member와 관련된 team을 가지고 온다)
+- select m.address from Member m
+ => 임베디드 타입 프로젝션
+- select m.username, m.age from Member m
+ => 스칼라 타입 프로젝션
+
+3. 페이징 API
+- JPA는 페이징을 다음 두 API로 추상화
+- setFirstResult(int startPosition) : 조회 시작 위치(0부터 시작)
+- setMaxResults(int maxResult)   : 조회할 데이터 수
+
+=> 몇 번째부터 몇 개 가지고 올래?
+
+4. 조인
+- 문법이 객체 스타일로 나간다
+- 내부 조인 : 
+   select m from Member m [inner] join m.team t
+- 외부 조인 :
+   select m from Member m left [outer] join m.team t
+- 세타 조인 : 연관관계가 없는 막 조인
+   select count(m) from Member m, Team t where m.uesrname = t.name
+  
+5. 서브 쿼리
+
+6. enumeration 
+
+6-1. enum이란
+- 데이터 중에서는 요일(월, 화, 수, 목, 금, 토, 일), 계절(봄, 여름, 가을, 
+겨울) 등과 같이 몇 가지 한정된 값을 갖는 경우가 흔히 있다. 요일,
+계절 등과 같이 한정된 데이터만을 가지는 타입을 Enumeration Type
+(열거타입)이라고 한다.
+- 월, 화, 수, . . . 열거되는 값들을 Enumeration constant(열거 상수)
+라고 한다.
+- 타입이름으로 첫 글자를 대문자로 하여 생성, 열거상수는 대문자로
+작성하는 것이 관례이다. 만약 열거 상수가 2개의 단어로 연결되어 있을
+때는 _로 연결하는 것이 관례이다.
+
+6-2. enum 장점
+- 코드가 단순해지며 가독성 좋아짐
+- 인스턴스 생성과 상속을 방지하며 상수값의 안정성이 보장됨
+- enum 예약어를 사용하므로 열거 의도를 분명히 함
+
+6-3. enum과 메모리 구조
+- 열거 상수는 상수 각각을 내부적으로 public static final 필드이면서
+객체로 제공되도록 한다. static이 붙어있기 때문에 각각의 상수는
+클래스변수로 클래스로더가 로드 시점에 JVM 메소드 영역에 해당 
+클래스 변수들을 항상 상주시켜 프로그램이 종료되기 전에는 언제나
+가져다 쓸 수 있는 주소공간을 확보한다.
