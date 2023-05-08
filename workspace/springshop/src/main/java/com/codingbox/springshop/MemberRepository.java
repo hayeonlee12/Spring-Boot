@@ -57,5 +57,9 @@ public class MemberRepository {
 		return em.createQuery("select m from Member m", Member.class)
 				.getResultList();
 	}
+
+	public Member findOne(Long memberId) {
+		return em.find(Member.class, memberId);
+	}
 	
 }

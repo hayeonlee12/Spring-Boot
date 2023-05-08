@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import com.codingbox.springshop.exception.NotEnoughStockException;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,4 +20,22 @@ public class Item {
 	private String name;
 	private int price;
 	private int stockQuantity;
+	
+	// ======= 비지니스 로직 ==== 
+	// stock 감소
+	public void removeStock(int quantity) {
+		int restStock = this.stockQuantity - quantity;
+		// 부족하면
+		if(restStock < 0) {
+			// 사용자 지정 Exception
+			throw new NotEnoughStockException("need more stock");
+		}
+		
+		this.stockQuantity = restStock;
+	}
+	
+	// stock 증가
+	public void addStock(int quantity) {
+		this.stockQuantity += quantity;
+	}
 }

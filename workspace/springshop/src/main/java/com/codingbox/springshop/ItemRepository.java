@@ -17,12 +17,13 @@ public class ItemRepository {
 	
 	public void save(Item item) {
 		// 처음에 item이 없으면 id가 null 값이기 때문이다.
-		if( item.getId() == null) {
+//		if( item.getId() == null) {
 			// 신규등록
 			em.persist(item);
-		} else {
-			
-		}
+//		} else {
+			// update
+//			em.merge(item);
+//		}
 	}
 	
 	// 메서드 : findAll()
@@ -31,5 +32,13 @@ public class ItemRepository {
 	public List<Item> findAll() {
 		return em.createQuery("select i from Item i", Item.class)
 				.getResultList();
+	}
+	
+	// item 하나 조회
+	// 메서드 : findOne
+	
+	public Item findOne(Long id) {
+		return em.find(Item.class, id);
+		
 	}
 }
