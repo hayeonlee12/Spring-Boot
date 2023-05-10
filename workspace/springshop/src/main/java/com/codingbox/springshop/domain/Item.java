@@ -21,6 +21,7 @@ public class Item {
 	private int price;
 	private int stockQuantity;
 	
+	
 	// ======= 비지니스 로직 ==== 
 	// stock 감소
 	public void removeStock(int quantity) {

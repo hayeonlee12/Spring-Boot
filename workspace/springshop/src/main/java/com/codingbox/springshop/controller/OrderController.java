@@ -5,11 +5,15 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.codingbox.springshop.OrderSearch;
 import com.codingbox.springshop.domain.Item;
 import com.codingbox.springshop.domain.Member;
+import com.codingbox.springshop.domain.Order;
 import com.codingbox.springshop.service.ItemService;
 import com.codingbox.springshop.service.MemberService;
 import com.codingbox.springshop.service.OrderService;
@@ -42,5 +46,21 @@ public class OrderController {
 	
 			orderService.order(memberId, itemId, count);
 			return "redirect:/orders";
+	}
+	
+	// 조회
+	@GetMapping("/orders")
+	public String orderList(@ModelAttribute("orderSearch") OrderSearch orderSearch, Model model) {
+		List<Order> orders = orderService.findOrders(orderSearch);
+		
+		model.addAttribute("orders", orders);
+		return "order/orderList";
+	}
+	
+	// 취소
+	@PostMapping("/orders/{orderId}/cancel")
+	public String cancelOrder(@PathVariable("orderId")Long orderId) {
+		orderService.cancelOrder(orderId);
+		return "redirect:/orders";
 	}
 }

@@ -38,7 +38,7 @@ public class Order {
 //	@JoinColumn(name = "delivery_id")
 //	private Delivery delivery;
 	
-	private LocalDateTime orderdate;
+	private LocalDateTime orderDate;
 	
 	@Enumerated(EnumType.STRING)
 	private OrderStatus status;
@@ -70,8 +70,16 @@ public class Order {
 			order.addOrderItem(orderItem);
 		}
 		order.setStatus(OrderStatus.ORDER);
-		order.setOrderdate(LocalDateTime.now());
+		order.setOrderDate(LocalDateTime.now());
 		
 		return order;
+		
+	}
+	
+	public void cancel() {
+		this.setStatus(OrderStatus.CANCEL);
+		for(OrderItem orderItem : orderItems) {
+			orderItem.cancel();
+		}
 	}
 }
